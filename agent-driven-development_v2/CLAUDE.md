@@ -22,21 +22,22 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 
 ## 成果物とテンプレート
 
+テンプレートは各フェーズスキルのディレクトリ内に同梱（スキルごと他プロジェクトへコピーすればそのまま使える）。
+
 | 成果物 | 生成フェーズ | テンプレート |
 |---|---|---|
-| `docs/constitution.md` | constitution（初回のみ） | `templates/constitution.md` |
-| `specs/NNN-機能名/spec.md` | specify | `templates/spec.md` |
+| `docs/constitution.md` | constitution（初回のみ） | `.claude/skills/sdd-constitution/template.md` |
+| `specs/NNN-機能名/spec.md` | specify | `.claude/skills/sdd-specify/template.md` |
 | `specs/NNN-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は sdd-clarify 参照） |
-| `specs/NNN-機能名/plan.md` | plan | `templates/plan.md` |
-| `specs/NNN-機能名/tasks.md` | tasks | `templates/tasks.md` |
-| `specs/NNN-機能名/spec-lite.md` | バイパス時のみ | `templates/spec-lite.md` |
+| `specs/NNN-機能名/plan.md` | plan | `.claude/skills/sdd-plan/template.md` |
+| `specs/NNN-機能名/tasks.md` | tasks | `.claude/skills/sdd-tasks/template.md` |
+| `specs/NNN-機能名/spec-lite.md` | バイパス時のみ | `.claude/skills/sdd/spec-lite-template.md` |
 | `specs/NNN-機能名/state.md` | sdd が管理 | 書式は `.claude/skills/sdd/SKILL.md` が正 |
 
 ## 構成
 
 ```
-.claude/skills/   sdd（オーケストレーター）＋8フェーズスキル
-templates/        成果物テンプレート5種
+.claude/skills/   sdd（オーケストレーター）＋8フェーズスキル（テンプレート同梱）
 specs/            機能ごとの成果物（NNN- 連番）
 docs/             constitution.md（初回に生成）
 ```
