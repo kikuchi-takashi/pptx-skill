@@ -72,6 +72,7 @@ description: "仕様駆動開発のオーケストレーター。新しい機能
 - 現在フェーズ: constitution | specify | clarify | plan | tasks | analyze | implement | review | verify | 完了
 ## 承認履歴
 - YYYY-MM-DD HH:MM <フェーズ名> 承認（ユーザー）
+- YYYY-MM-DD HH:MM clarify 自動通過（曖昧箇所ゼロ）
 ## フェーズ内進捗（implement 中のみ）
 - [ ] T1: <タスク名>（サブエージェント | 直接）
 ## 差し戻し履歴
