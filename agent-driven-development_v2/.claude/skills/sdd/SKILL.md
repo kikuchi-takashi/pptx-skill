@@ -39,7 +39,7 @@ description: "仕様駆動開発のオーケストレーター。新しい機能
 - 既存 spec.md の受け入れ基準に影響しない
 - 新しい依存関係・データモデル変更を伴わない
 
-該当する場合: specify/plan/tasks を `spec-lite.md`（①変更内容 ②受け入れ基準 ③検証コマンド の3節）1枚にまとめ、ユーザー承認後 implement → verify へ直行する。バイパス採用と理由を state.md に記録する。
+該当する場合: specify/plan/tasks を `spec-lite.md`（①変更内容 ②受け入れ基準 ③検証コマンド の3節。雛形: `templates/spec-lite.md`）1枚にまとめ、ユーザー承認後 implement → verify へ直行する。バイパス採用と理由を state.md に記録する。
 バイパス中の「現在フェーズ」は、spec-lite 作成中は specify、実装中は implement、検証中は verify を用いる。
 
 ## state.md フォーマット（全フェーズスキル共通の正）
