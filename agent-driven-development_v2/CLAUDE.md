@@ -13,8 +13,8 @@
 ## フェーズ
 
 ```
-constitution → specify → clarify → plan → tasks → analyze → implement → verify
-（原則策定）   （仕様）  （曖昧解消）（技術計画）（分解） （整合検証） （実装）  （受入検証）
+constitution → specify → clarify → plan → tasks → analyze → implement → review → verify
+（原則策定）   （仕様）  （曖昧解消）（技術計画）（分解） （整合検証） （実装） （コードレビュー）（受入検証）
 ```
 
 各フェーズの完了にはユーザー承認が必須（clarify のみ曖昧箇所ゼロなら自動通過）。
@@ -37,7 +37,7 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 ## 構成
 
 ```
-.claude/skills/   sdd（オーケストレーター）＋8フェーズスキル（テンプレート同梱）
+.claude/skills/   sdd（オーケストレーター）＋9フェーズスキル（テンプレート同梱）
 specs/            機能ごとの成果物（NNN- 連番）
 docs/             constitution.md（初回に生成）
 ```

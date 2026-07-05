@@ -1,6 +1,6 @@
 ---
 name: sdd
-description: "仕様駆動開発のオーケストレーター。新しい機能・アプリ・スクリプトの開発依頼すべてで最初に使う。原則→仕様→明確化→計画→タスク分解→整合性検証→実装→検証の8フェーズをゲート付きで進行管理する。日本語トリガー例:「〜を作って」「機能を追加して」「〜を実装したい」「開発を再開して」「続きから」"
+description: "仕様駆動開発のオーケストレーター。新しい機能・アプリ・スクリプトの開発依頼すべてで最初に使う。原則→仕様→明確化→計画→タスク分解→整合性検証→実装→レビュー→検証の9フェーズをゲート付きで進行管理する。日本語トリガー例:「〜を作って」「機能を追加して」「〜を実装したい」「開発を再開して」「続きから」"
 ---
 
 # sdd — 仕様駆動開発オーケストレーター
@@ -31,7 +31,8 @@ description: "仕様駆動開発のオーケストレーター。新しい機能
 | 5 | tasks | sdd-tasks | 必須 |
 | 6 | analyze | sdd-analyze | 必須（重大問題ゼロの報告に対する確認） |
 | 7 | implement | sdd-implement | タスクごとに検証、フェーズ完了時に承認 |
-| 8 | verify | sdd-verify | 必須（証拠付き完了報告） |
+| 8 | review | sdd-review | 必須（重大・重要の指摘ゼロで通過） |
+| 9 | verify | sdd-verify | 必須（証拠付き完了報告） |
 
 ## 小規模バイパス基準（すべて満たす場合のみ）
 
@@ -39,7 +40,7 @@ description: "仕様駆動開発のオーケストレーター。新しい機能
 - 既存 spec.md の受け入れ基準に影響しない
 - 新しい依存関係・データモデル変更を伴わない
 
-該当する場合: specify/plan/tasks を `spec-lite.md`（①変更内容 ②受け入れ基準 ③検証コマンド の3節。雛形: このスキルと同じディレクトリの `spec-lite-template.md`）1枚にまとめ、ユーザー承認後 implement → verify へ直行する。バイパス採用と理由を state.md に記録する。
+該当する場合: specify/plan/tasks を `spec-lite.md`（①変更内容 ②受け入れ基準 ③検証コマンド の3節。雛形: このスキルと同じディレクトリの `spec-lite-template.md`）1枚にまとめ、ユーザー承認後 implement → verify へ直行する（1〜2ファイルの小変更のため review フェーズは省略。必要なら sdd-review を単体で呼べる）。バイパス採用と理由を state.md に記録する。
 バイパス中の「現在フェーズ」は、spec-lite 作成中は specify、実装中は implement、検証中は verify を用いる。
 
 ## state.md フォーマット（全フェーズスキル共通の正）
@@ -48,7 +49,7 @@ description: "仕様駆動開発のオーケストレーター。新しい機能
 # NNN-機能名 進行状態
 - 機能名: <日本語名>
 - ルート: フル | バイパス（理由: 〜）
-- 現在フェーズ: constitution | specify | clarify | plan | tasks | analyze | implement | verify | 完了
+- 現在フェーズ: constitution | specify | clarify | plan | tasks | analyze | implement | review | verify | 完了
 ## 承認履歴
 - YYYY-MM-DD HH:MM <フェーズ名> 承認（ユーザー）
 ## フェーズ内進捗（implement 中のみ）
