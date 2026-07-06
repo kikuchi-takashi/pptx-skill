@@ -41,5 +41,5 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 ```
 .claude/skills/   sdd / sdd-auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）＋sdd-maintain（メンテ用）
 specs/            機能ごとの成果物（NNN- 連番）
-docs/             constitution.md（初回に生成）
+docs/             constitution.md（初回に生成）・maintain-log.md（メンテ却下記録）
 ```
