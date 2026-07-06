@@ -10,6 +10,7 @@
 - **再開**: 「続きから」「開発を再開して」→ `specs/*/state.md` から現在フェーズに復帰
 - **小規模修正**: 1〜2ファイル（テスト込み）の修正は spec-lite によるバイパスルート（判定は sdd が行う）
 - 各フェーズスキル（`sdd-specify` 等）は単体でも呼び出し可
+- **スキルセット自体の変更**: 「スキルを改善して」「新スキルを追加して」→ `sdd-maintain` が契約（state.md 書式・フェーズ列挙・description 規約）を守らせる
 
 ## フェーズ
 
@@ -38,7 +39,7 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 ## 構成
 
 ```
-.claude/skills/   sdd / sdd-auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）
+.claude/skills/   sdd / sdd-auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）＋sdd-maintain（メンテ用）
 specs/            機能ごとの成果物（NNN- 連番）
 docs/             constitution.md（初回に生成）
 ```
