@@ -6,12 +6,12 @@
 ## 使い方
 
 - **新規開発**: 「TODO アプリを作って」→ `sdd` が自動発火し、フェーズを順に進める（各フェーズはユーザー承認制）
-- **フルオート**: 「フルオートで〜を作って」と明示指定 → `sdd-auto` が承認を審査エージェントに代行させ、統合手前まで無人で完走（破壊的操作・仕様の根本的曖昧さ・ループ上限では停止）
+- **フルオート**: 「フルオートで〜を作って」と明示指定 → `auto` が承認を審査エージェントに代行させ、統合手前まで無人で完走（破壊的操作・仕様の根本的曖昧さ・ループ上限では停止）
 - **再開**: 「続きから」「開発を再開して」→ `specs/*/state.md` から現在フェーズに復帰
 - **小規模修正**: 1〜2ファイル（テスト込み）の修正は spec-lite によるバイパスルート（判定は sdd が行う）
-- 各フェーズスキル（`sdd-specify` 等）は単体でも呼び出し可
-- **受領レビュー対応**: 「PR コメントを反映して」「レビュー指摘に対応して」→ `sdd-receive-review` が指摘を検証・分類し、完了済み機能を再オープンして修正ルートへ
-- **スキルセット自体の変更**: 「スキルを改善して」「新スキルを追加して」→ `sdd-maintain` が契約（state.md 書式・フェーズ列挙・description 規約）を守らせる
+- 各フェーズスキル（`specify` 等）は単体でも呼び出し可
+- **受領レビュー対応**: 「PR コメントを反映して」「レビュー指摘に対応して」→ `receive-review` が指摘を検証・分類し、完了済み機能を再オープンして修正ルートへ
+- **スキルセット自体の変更**: 「スキルを改善して」「新スキルを追加して」→ `maintain` が契約（state.md 書式・フェーズ列挙・description 規約）を守らせる
 
 ## フェーズ
 
@@ -29,20 +29,20 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 
 | 成果物 | 生成フェーズ | テンプレート |
 |---|---|---|
-| `docs/constitution.md` | constitution（初回のみ） | `.claude/skills/sdd-constitution/template.md` |
-| `specs/NNN-機能名/spec.md` | specify | `.claude/skills/sdd-specify/template.md` |
-| `specs/NNN-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は sdd-clarify 参照） |
-| `specs/NNN-機能名/plan.md` | plan | `.claude/skills/sdd-plan/template.md` |
-| `specs/NNN-機能名/tasks.md` | tasks | `.claude/skills/sdd-tasks/template.md` |
+| `docs/constitution.md` | constitution（初回のみ） | `.claude/skills/constitution/template.md` |
+| `specs/NNN-機能名/spec.md` | specify | `.claude/skills/specify/template.md` |
+| `specs/NNN-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は clarify 参照） |
+| `specs/NNN-機能名/plan.md` | plan | `.claude/skills/plan/template.md` |
+| `specs/NNN-機能名/tasks.md` | tasks | `.claude/skills/tasks/template.md` |
 | `specs/NNN-機能名/spec-lite.md` | バイパス時のみ | `.claude/skills/sdd/spec-lite-template.md` |
 | `specs/NNN-機能名/state.md` | sdd が管理 | 書式は `.claude/skills/sdd/SKILL.md` が正 |
 
 ## 構成
 
 ```
-.claude/skills/   sdd / sdd-auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）
-                  ＋sdd-receive-review（受領レビュー対応）＋sdd-maintain（メンテ用）
-.claude/agents/   sdd-improver（評価・改善ループ専門エージェント。sdd-maintain から派遣）
+.claude/skills/   sdd / auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）
+                  ＋receive-review（受領レビュー対応）＋maintain（メンテ用）
+.claude/agents/   sdd-improver（評価・改善ループ専門エージェント。maintain から派遣）
 specs/            機能ごとの成果物（NNN- 連番）
 docs/             constitution.md（初回に生成）・maintain-log.md（メンテ却下記録）
 ```

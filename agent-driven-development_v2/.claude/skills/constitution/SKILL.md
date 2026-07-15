@@ -1,9 +1,9 @@
 ---
-name: sdd-constitution
+name: constitution
 description: "プロジェクトの開発原則（技術スタック方針・品質基準・禁止事項・レビュー方針）を対話で確定し docs/constitution.md に書く。プロジェクト初回のみ。日本語トリガー例:「プロジェクト原則を決めて」「開発ルールを作って」。通常は sdd オーケストレーター経由で呼ばれる。単体でも呼び出し可"
 ---
 
-# sdd-constitution — プロジェクト原則の策定
+# constitution — プロジェクト原則の策定
 
 以後の plan / analyze / implement / review すべてが参照する「憲法」を作る。
 

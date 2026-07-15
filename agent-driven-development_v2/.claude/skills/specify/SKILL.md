@@ -1,9 +1,9 @@
 ---
-name: sdd-specify
+name: specify
 description: "機能の仕様書（ユーザーストーリー＋Given/When/Then 受け入れ基準）を書く。WHAT/WHY のみを扱い、技術選定や実装方法（HOW）は書かない。日本語トリガー例:「仕様書を書いて」「要件をまとめて」。通常は sdd オーケストレーター経由で呼ばれる。単体でも呼び出し可"
 ---
 
-# sdd-specify — 仕様書の作成
+# specify — 仕様書の作成
 
 ## HOW 禁止ルール
 

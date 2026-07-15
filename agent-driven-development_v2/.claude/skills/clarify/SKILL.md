@@ -1,9 +1,9 @@
 ---
-name: sdd-clarify
+name: clarify
 description: "仕様書の曖昧箇所を1問ずつの質問で解消し、Q&A を記録して spec.md に反映する。日本語トリガー例:「仕様の曖昧なところを詰めて」「要確認を潰して」。通常は sdd オーケストレーター経由で呼ばれる。単体でも呼び出し可"
 ---
 
-# sdd-clarify — 曖昧箇所の解消
+# clarify — 曖昧箇所の解消
 
 ## 手順
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# SDD スキルセットの契約検証（sdd-maintain「変更後の必須検証」の自動化）
+# SDD スキルセットの契約検証（maintain「変更後の必須検証」の自動化）
 # 使い方: scripts/validate（スキルセットのルートから、またはどこからでも）
 # 注意: フェーズ数を変えたら本スクリプトの期待値（9フェーズ・列挙値）も更新すること
-#       （sdd-maintain チェックリスト B の追随対象）
+#       （maintain チェックリスト B の追随対象）
 
 set -u
 cd "$(dirname "$0")/.." || exit 1
@@ -19,7 +19,7 @@ done
 
 # 2. フェーズ数の写しの一致
 grep -q '9フェーズ' .claude/skills/sdd/SKILL.md          || { echo 'NG フェーズ数: sdd description'; fail=1; }
-grep -q '現在9'     .claude/skills/sdd-maintain/SKILL.md || { echo 'NG フェーズ数: sdd-maintain 契約表'; fail=1; }
+grep -q '現在9'     .claude/skills/maintain/SKILL.md || { echo 'NG フェーズ数: maintain 契約表'; fail=1; }
 grep -q '9フェーズスキル' CLAUDE.md                       || { echo 'NG フェーズ数: CLAUDE.md 構成'; fail=1; }
 
 # 3. state.md 現在フェーズの列挙値（正: sdd/SKILL.md）
@@ -27,15 +27,15 @@ grep -q '現在フェーズ: constitution | specify | clarify | plan | tasks | a
   .claude/skills/sdd/SKILL.md || { echo 'NG: state.md 列挙値'; fail=1; }
 
 # 4. テンプレート・プロンプトの実在
-for p in sdd-specify/template.md sdd-plan/template.md sdd-tasks/template.md \
-         sdd-constitution/template.md sdd/spec-lite-template.md \
-         sdd-implement/implementer-prompt.md; do
+for p in specify/template.md plan/template.md tasks/template.md \
+         constitution/template.md sdd/spec-lite-template.md \
+         implement/implementer-prompt.md; do
   [ -f ".claude/skills/$p" ] || { echo "NG 実在: $p"; fail=1; }
 done
 
 # 5. 節名参照の実在（番号参照の張り替え先が消えていないか）
-grep -q '統合方法の選択肢'   .claude/skills/sdd-verify/SKILL.md  || { echo 'NG 参照: sdd-verify「統合方法の選択肢」'; fail=1; }
-grep -q '## 質問の優先順位' .claude/skills/sdd-clarify/SKILL.md || { echo 'NG 参照: sdd-clarify「質問の優先順位」'; fail=1; }
+grep -q '統合方法の選択肢'   .claude/skills/verify/SKILL.md  || { echo 'NG 参照: verify「統合方法の選択肢」'; fail=1; }
+grep -q '## 質問の優先順位' .claude/skills/clarify/SKILL.md || { echo 'NG 参照: clarify「質問の優先順位」'; fail=1; }
 
 # 6. 150行閾値の警告（失敗にはしない。description 規約の分割検討ライン）
 for d in .claude/skills/*/; do

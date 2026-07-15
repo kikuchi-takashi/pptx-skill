@@ -1,9 +1,9 @@
 ---
-name: sdd-analyze
+name: analyze
 description: "実装前に spec・plan・tasks の整合性を検証する読み取り専用チェック。受け入れ基準のカバレッジ表・矛盾・constitution 違反・検証コマンドの実行可能性を報告する。日本語トリガー例:「整合性をチェックして」「実装前チェックして」。通常は sdd オーケストレーター経由で呼ばれる。単体でも呼び出し可"
 ---
 
-# sdd-analyze — 整合性検証（read-only）
+# analyze — 整合性検証（read-only）
 
 <HARD-GATE>
 このスキルは成果物を書き換えない。報告のみ。修正は該当フェーズへの差し戻しで行う。
