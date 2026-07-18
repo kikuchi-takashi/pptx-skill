@@ -30,12 +30,12 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 | 成果物 | 生成フェーズ | テンプレート |
 |---|---|---|
 | `docs/constitution.md` | constitution（初回のみ） | `.claude/skills/constitution/template.md` |
-| `specs/NNN-機能名/spec.md` | specify | `.claude/skills/specify/template.md` |
-| `specs/NNN-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は clarify 参照） |
-| `specs/NNN-機能名/plan.md` | plan | `.claude/skills/plan/template.md` |
-| `specs/NNN-機能名/tasks.md` | tasks | `.claude/skills/tasks/template.md` |
-| `specs/NNN-機能名/spec-lite.md` | バイパス時のみ | `.claude/skills/sdd/spec-lite-template.md` |
-| `specs/NNN-機能名/state.md` | sdd が管理 | 書式は `.claude/skills/sdd/SKILL.md` が正 |
+| `specs/YYYY-MM-DD-機能名/spec.md` | specify | `.claude/skills/specify/template.md` |
+| `specs/YYYY-MM-DD-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は clarify 参照） |
+| `specs/YYYY-MM-DD-機能名/plan.md` | plan | `.claude/skills/plan/template.md` |
+| `specs/YYYY-MM-DD-機能名/tasks.md` | tasks | `.claude/skills/tasks/template.md` |
+| `specs/YYYY-MM-DD-機能名/spec-lite.md` | バイパス時のみ | `.claude/skills/sdd/spec-lite-template.md` |
+| `specs/YYYY-MM-DD-機能名/state.md` | sdd が管理 | 書式は `.claude/skills/sdd/SKILL.md` が正 |
 
 ## 構成
 
@@ -43,6 +43,6 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 .claude/skills/   sdd / auto（オーケストレーター）＋9フェーズスキル（テンプレート同梱）
                   ＋receive-review（受領レビュー対応）＋maintain（メンテ用）
 .claude/agents/   sdd-improver（評価・改善ループ専門エージェント。maintain から派遣）
-specs/            機能ごとの成果物（NNN- 連番）
+specs/            機能ごとの成果物（YYYY-MM-DD-機能名）
 docs/             constitution.md（初回に生成）・maintain-log.md（メンテ却下記録）
 ```

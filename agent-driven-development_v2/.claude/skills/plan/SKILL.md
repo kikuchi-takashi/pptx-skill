@@ -9,7 +9,7 @@ description: "承認済み仕様書から技術計画（技術選定・コンポ
 
 spec.md が承認済み（state.md の承認履歴に記録あり）でなければ、sdd に差し戻す。`[要確認]` が残っていたら clarify に差し戻す。
 
-## 出力フォーマット（specs/NNN-機能名/plan.md）
+## 出力フォーマット（specs/YYYY-MM-DD-機能名/plan.md）
 
 このスキルと同じディレクトリの `template.md` をコピーして埋める。テンプレート内のコメントが記入ガイド。
 テスト戦略の表にはすべての AC-n を、constitution 準拠チェックの表には constitution の全項目を列挙する。検証レベル（unit/integration/e2e）の選定は template の指針に従う。
