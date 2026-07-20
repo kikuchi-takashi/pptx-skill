@@ -31,13 +31,37 @@ VOL_LONG_WINDOW = 60
 EARNINGS_SOON_DAYS = 14          # 決算発表まで何日以内を「近い」とみなすか
 
 
+def _read_ticker_csv(path, label):
+    """CSVを読み込んで DataFrame を返す。ファイル不在・空ファイル・パース不能などの
+    入力エラーはここで捕まえ、生のスタックトレースではなく分かりやすいメッセージで
+    処理を中止する。
+    """
+    try:
+        return pd.read_csv(path)
+    except FileNotFoundError:
+        print(f"[エラー] {label}CSVが見つかりません: {path}", file=sys.stderr)
+        raise SystemExit("入力ファイルが存在しないため、処理を中止しました。")
+    except pd.errors.EmptyDataError:
+        print(f"[エラー] {label}CSVが空です（ヘッダー行もありません）: {path}", file=sys.stderr)
+        raise SystemExit("入力内容がスキャン対象として成立しないため、処理を中止しました。")
+    except pd.errors.ParserError as e:
+        print(f"[エラー] {label}CSVの形式を読み取れませんでした: {path}（{e}）", file=sys.stderr)
+        raise SystemExit("入力内容がスキャン対象として成立しないため、処理を中止しました。")
+
+
 def read_watchlist(path):
-    """ウォッチリストCSV（ticker列必須）を読み込み、ティッカーのリストを返す。"""
-    df = pd.read_csv(path)
+    """ウォッチリストCSV（ticker列必須）を読み込み、ティッカーのリストを返す。
+
+    yfinanceのティッカー表記は大文字が慣例（`AAPL`, `7203.T`, `BTC-USD` 等）のため、
+    大文字小文字だけが異なる表記（`aapl` と `AAPL` 等）を同一銘柄として扱えるよう
+    大文字に正規化する（正規化しないと同一銘柄が別ティッカーとして二重に取得・
+    二重にレポートへ表示されてしまう）。
+    """
+    df = _read_ticker_csv(path, "ウォッチリスト")
     if "ticker" not in df.columns:
         print(f"[エラー] ウォッチリストCSVに ticker 列がありません: {path}", file=sys.stderr)
         raise SystemExit("入力内容がスキャン対象として成立しないため、処理を中止しました。")
-    tickers = [str(t).strip() for t in df["ticker"] if str(t).strip() and str(t).strip().lower() != "nan"]
+    tickers = [str(t).strip().upper() for t in df["ticker"] if str(t).strip() and str(t).strip().lower() != "nan"]
     return tickers
 
 
@@ -45,12 +69,15 @@ def read_portfolio_tickers(path):
     """保有ポジションCSV（`portfolio-risk` と同じ ticker,quantity,cost_basis 形式）から
     ティッカーのリストを取り出す。本スキルはこのCSVの数量・取得単価は使わず、対象
     銘柄の抽出だけに用いる（詳細なリスク評価は `portfolio-risk` スキールの領分）。
+
+    ウォッチリストと同様、大文字小文字の表記ゆれを同一銘柄として扱うため大文字に
+    正規化する（`read_watchlist` と同じ理由）。
     """
-    df = pd.read_csv(path)
+    df = _read_ticker_csv(path, "保有ポジション")
     if "ticker" not in df.columns:
         print(f"[エラー] 保有ポジションCSVに ticker 列がありません: {path}", file=sys.stderr)
         raise SystemExit("入力内容がスキャン対象として成立しないため、処理を中止しました。")
-    tickers = [str(t).strip() for t in df["ticker"] if str(t).strip() and str(t).strip().lower() != "nan"]
+    tickers = [str(t).strip().upper() for t in df["ticker"] if str(t).strip() and str(t).strip().lower() != "nan"]
     return tickers
 
 
@@ -98,12 +125,9 @@ def fetch_history(ticker, period):
 def compute_technical_signals(df):
     """移動平均クロス・RSI過熱・ボリンジャーブレイクを判定する。
 
-    RSI・ボリンジャーバンドの計算式は `market-data-report/scripts/make_report.py` の
-    `compute_indicators()` と同じ考え方（SMA20±2σ、14日RSI）を踏襲しつつ、本スキル
-    独自に再実装している。共有モジュール化も検討したが、両スキルは実行フロー・
-    出力形式が異なり（片方はチャート画像込みの単体レポート、こちらは複数銘柄の
-    横断スキャン）、無理に共通化するとかえって結合度が上がると判断した。
-    `portfolio-risk` が独自に価格取得ロジックを持っている前例と同じ考え方。
+    RSI・ボリンジャーバンドの計算式は `make_report.py` の `compute_indicators()` と
+    同じ考え方（SMA20±2σ、14日RSI）。実装方針の詳細・非共通化の理由は
+    `references/SIGNALS.md` を参照。
     """
     signals = []
     d = df.copy()

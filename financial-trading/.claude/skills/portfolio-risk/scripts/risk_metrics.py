@@ -16,6 +16,25 @@ import numpy as np
 import pandas as pd
 
 
+def _read_positions_csv(path):
+    """保有ポジションCSVを読み込んで DataFrame を返す。ファイル不在・空ファイル・
+    パース不能などの入力エラーはここで捕まえ、生のスタックトレースではなく分かりやすい
+    メッセージで処理を中止する（`market-scan/scripts/scan.py` の `_read_ticker_csv` と
+    同じ方針）。
+    """
+    try:
+        return pd.read_csv(path)
+    except FileNotFoundError:
+        print(f"[エラー] 保有ポジションCSVが見つかりません: {path}", file=sys.stderr)
+        raise SystemExit("入力ファイルが存在しないため、処理を中止しました。")
+    except pd.errors.EmptyDataError:
+        print(f"[エラー] 保有ポジションCSVが空です（ヘッダー行もありません）: {path}", file=sys.stderr)
+        raise SystemExit("入力内容がリスク評価として成立しないため、処理を中止しました。")
+    except pd.errors.ParserError as e:
+        print(f"[エラー] 保有ポジションCSVの形式を読み取れませんでした: {path}（{e}）", file=sys.stderr)
+        raise SystemExit("入力内容がリスク評価として成立しないため、処理を中止しました。")
+
+
 def fetch_price_history(tickers, period):
     try:
         import yfinance as yf
@@ -160,7 +179,7 @@ def main():
     parser.add_argument("--out", required=True, help="出力Markdownレポートのパス")
     args = parser.parse_args()
 
-    positions = pd.read_csv(args.positions)
+    positions = _read_positions_csv(args.positions)
     required_cols = {"ticker", "quantity", "cost_basis"}
     if not required_cols.issubset(positions.columns):
         print(f"[エラー] CSVに必須列が不足しています: {required_cols - set(positions.columns)}", file=sys.stderr)
@@ -168,6 +187,12 @@ def main():
     if positions.empty:
         print("[エラー] 保有ポジションCSVに行がありません（ヘッダーのみ）。", file=sys.stderr)
         raise SystemExit("入力内容がリスク評価として成立しないため、処理を中止しました。")
+
+    # yfinanceのティッカー表記は大文字が慣例（`AAPL`, `7203.T` 等）のため、大文字小文字
+    # だけが異なる表記（`aapl` と `AAPL`）を正規化しないと、下の重複チェックが同一銘柄を
+    # 見逃し、同じ保有が2行に分かれたまま二重計上されてしまう（`market-scan/scripts/scan.py`
+    # の `read_watchlist()`/`read_portfolio_tickers()` と同じ理由・同じ対策）。
+    positions["ticker"] = positions["ticker"].astype(str).str.strip().str.upper()
 
     positions["quantity"] = pd.to_numeric(positions["quantity"], errors="coerce")
     positions["cost_basis"] = pd.to_numeric(positions["cost_basis"], errors="coerce")

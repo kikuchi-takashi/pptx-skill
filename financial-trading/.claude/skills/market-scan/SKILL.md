@@ -104,6 +104,14 @@ AAPL,10,180.5
 python3 scripts/scan.py --watchlist ./watchlist.csv --positions ./positions.csv \
   --period 6mo --out ./output/market_scan_report.md
 ```
+片方だけを対象にする場合は、該当しない方の引数を渡さなければよい（両方必須ではない。
+Step1の確認結果に応じて省略する）:
+```bash
+# ウォッチリストのみ
+python3 scripts/scan.py --watchlist ./watchlist.csv --period 6mo --out ./output/market_scan_report.md
+# 保有ポジションのみ
+python3 scripts/scan.py --positions ./positions.csv --period 6mo --out ./output/market_scan_report.md
+```
 判定基準・閾値の定義は `references/SIGNALS.md` を参照。個別銘柄の取得失敗
 （ティッカー誤り・レート制限等）はその銘柄をスキャン対象から除外した上で
 「データ取得上の注意」としてレポートに明記され、スキャン全体は中断しない。

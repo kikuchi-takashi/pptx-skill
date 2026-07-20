@@ -74,7 +74,18 @@ def main():
     parser.add_argument("--out", required=True, help="出力CSVパス")
     args = parser.parse_args()
 
-    tickers = [t.strip() for t in args.tickers.split(",") if t.strip()]
+    # yfinanceのティッカー表記は大文字が慣例（`AAPL`, `7203.T` 等）のため、大文字小文字
+    # だけが異なる表記（`aapl` と `AAPL`）を同一銘柄として扱えるよう大文字に正規化し、
+    # 重複を除去する（正規化しないと同一銘柄が別ティッカーとして二重に取得・二重に
+    # レポートへ表示されてしまう。`market-scan/scripts/scan.py` の
+    # `read_watchlist()`/`read_portfolio_tickers()` と同じ理由・同じ対策）。
+    seen = set()
+    tickers = []
+    for t in args.tickers.split(","):
+        t = t.strip().upper()
+        if t and t not in seen:
+            seen.add(t)
+            tickers.append(t)
     df, errors = fetch_prices(tickers, args.period, args.interval)
     df.to_csv(args.out, index=False)
     print(f"saved: {args.out} ({len(df)} rows, {df['ticker'].nunique()} tickers)")
