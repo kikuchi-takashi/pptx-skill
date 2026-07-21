@@ -34,6 +34,8 @@ constitution → specify → clarify → plan → tasks → analyze → implemen
 | `specs/YYYY-MM-DD-機能名/clarifications.md` | clarify | （spec の Q&A 記録。書式は clarify 参照） |
 | `specs/YYYY-MM-DD-機能名/plan.md` | plan | `.claude/skills/plan/template.md` |
 | `specs/YYYY-MM-DD-機能名/tasks.md` | tasks | `.claude/skills/tasks/template.md` |
+| `specs/YYYY-MM-DD-機能名/analyze-report.md` | analyze | （書式は analyze 参照。state.md 復旧材料） |
+| `specs/YYYY-MM-DD-機能名/review-report.md` | review（フィーチャーレビューのみ） | （書式は review 参照。state.md 復旧材料） |
 | `specs/YYYY-MM-DD-機能名/spec-lite.md` | バイパス時のみ | `.claude/skills/sdd/spec-lite-template.md` |
 | `specs/YYYY-MM-DD-機能名/state.md` | sdd が管理 | 書式は `.claude/skills/sdd/SKILL.md` が正 |
 
